@@ -1,0 +1,139 @@
+<%- include('partials/header')-%>
+<% data["districts"].forEach((dist)=> { %>
+    <%if(dist["district"]=="Madurai") {%>   
+        
+        <br>
+        <br><br>
+        <div class="container-fluid">
+            <div class="row content">
+                <div class="col-sm-5">
+    <div class="card mb-5 w-75">
+        <div class="row no-gutters">
+
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h2 class="card-title"><%= dist["district"] %> </h2><h5>As of Today</h5>
+                    <hr width="100%">
+                    <br>
+
+                    <h5><p class="card-text text-danger">Total Active cases:&nbsp;<b><br>  <%= dist["active"] %></b> </h5></p>
+                    <h5><p class="card-text text-warning">Total Confirmed Cases: &nbsp;<b><br> <%= dist["confirmed"] %></b></h5> </p>
+                    <h5><p class="card-text text-dark">eople died : &nbsp;<b> <br> <%= dist["deceased"] %></b></h5> </p>
+                    <h5><p class="card-text text-success">People recovered:&nbsp;<br> <b><%= dist["recovered"] %></b></h5> </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <%}%>
+    <% }) %>
+
+</div>
+<div class="col-sm-7">
+<canvas id="chart" class="container"></canvas>
+</div>
+</div>
+</div>
+<br>
+<br>
+    <form action="/results" method="GET" class="justify-content-center d-flex">
+        <input type="text" name="search" class="form-control w-25" placeholder="Enter district name.." required="required">
+        <button class="ml-3 text-center btn btn-success">Search District</button>
+    </form>
+    <br><br>
+    <hr class="container md-5 w-75" style="border: 10px solid #ccdefe;border-radius: 5px;">
+    <br><br>
+    <div class="cont" style="text-align: center;">
+      <ul class="contact" style="display: inline-block;
+      margin: 0 auto;
+      padding-left: 0; list-style: none;">
+      <li style="text-align: left;" style="display: inline-block;
+      list-style-type: none;
+      margin: 0 1em;
+      text-align: center;">
+        <p style="text-align: center;"><i class="fa fa-wrench fa-3x" style="display: inline-block;
+            opacity: 0.7;"></i></p>
+        <p style="text-align: center;"><strong>Developed By</strong></br>Hari Haran</p>
+      </li>
+        <li style="text-align: left;" style="display: inline-block;
+        list-style-type: none;
+        margin: 0 1em;
+        text-align: center;">
+          <p style="text-align: center;"><i class="fa fa-envelope fa-3x" style="display: inline-block;
+              opacity: 0.7;"></i></p>
+          <p style="text-align: center;"><strong>Email</strong></br>e.hari.haran.98@gmail.com</p>
+        </li>
+      </ul>
+    </div>
+    <hr class="container md-5 w-75" style="border: 10px solid #ccdefe;border-radius: 5px;">
+  
+    
+</body>
+<script>
+  var chart = document.getElementById("chart");
+  fetch("https://api.covid19india.org/districts_daily.json")
+    .then((res) => res.json())
+    .then((res) => {
+      const date = res["districtsDaily"]["Tamil Nadu"]["Madurai"].map(
+        (d) => d.date
+      );
+      const active = res["districtsDaily"]["Tamil Nadu"]["Madurai"].map(
+        (d) => d.active
+      );
+      const confirmed = res["districtsDaily"]["Tamil Nadu"]["Madurai"].map(
+        (d) => d.confirmed
+      );
+      const recovered = res["districtsDaily"]["Tamil Nadu"]["Madurai"].map(
+        (d) => d.recovered
+      );
+      const deceased= res["districtsDaily"]["Tamil Nadu"]["Madurai"].map(
+        (d) => d.deceased
+      );
+
+      var d = new Chart(chart, {
+        type: "bar",
+        data: {
+          labels: date,
+          datasets: [
+          {
+              data: confirmed,
+              label: "No of confirmed cases",
+              backgroundColor :"orange"
+            },
+            {
+              data: active,
+              label: "No of active cases",
+              backgroundColor :"red"
+            },
+        
+           
+          ],
+        },
+        options: {
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                },
+              },
+            ],
+          },
+        },
+      });
+    });
+</script>
+
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</html>
+
+
+
+
+

@@ -1,0 +1,56 @@
+<%- include('partials/header')-%>
+<h1 id="searchHeading">Searched District<span style="color: grey;">></span> <%= searchQuery%></h1>
+<%let sq = searchQuery%>
+
+<% disdata["districts"].forEach((dist)=> { %>
+    <%if((dist["district"].toLowerCase()==sq.toLowerCase()) || (dist["district"].toUpperCase()==sq.toUpperCase()) || (dist["district"]==sq)){%>
+    <div class="card mb-5 w-75">
+        <div class="row no-gutters">
+
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h2><%= dist["district"] %> -</h2>Today</h2> <%=dist["state"]%></h2>
+                    <hr>
+                    <br>
+                    <h6 class="card-text "><b>Total Active cases:</b> <h4 class="card-text text-danger"> <%= dist["active"] %> </h6></p>
+                        <p class="card-text text-warning"><b>Total Confirmed Cases:</b><h4 class="card-text text-warning">  <%= dist["confirmed"] %></h6> </p>
+                        <p class="card-text text-dark"><b>Number of people died : </b> <h4 class="card-text text-dark"> <%= dist["deceased"] %></h6> </p>
+                        <p class="card-text text-success"><b>Number of people recovered: </b><h4 class="card-text text-success">  <%= dist["recovered"] %></h6> </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <center><a href="/"><button class="btn btn-info">Back</button></a></center>
+    <%}%>
+     
+<% }) %>
+<hr class="container md-5 w-75" style="border: 10px solid #ccdefe;border-radius: 5px;">
+<br><br>
+<div class="cont" style="text-align: center;">
+  <ul class="contact" style="display: inline-block;
+  margin: 0 auto;
+  padding-left: 0; list-style: none;">
+  <li style="text-align: left;" style="display: inline-block;
+  list-style-type: none;
+  margin: 0 1em;
+  text-align: center;">
+    <p style="text-align: center;"><i class="fa fa-wrench fa-3x" style="display: inline-block;
+        opacity: 0.7;"></i></p>
+    <p style="text-align: center;"><strong>Developed By</strong></br>Hari Haran</p>
+  </li>
+    <li style="text-align: left;" style="display: inline-block;
+    list-style-type: none;
+    margin: 0 1em;
+    text-align: center;">
+      <p style="text-align: center;"><i class="fa fa-envelope fa-3x" style="display: inline-block;
+          opacity: 0.7;"></i></p>
+      <p style="text-align: center;"><strong>Email</strong></br>e.hari.haran.98@gmail.com</p>
+    </li>
+  </ul>
+</div>
+<hr class="container md-5 w-75" style="border: 10px solid #ccdefe;border-radius: 5px;">  
+
+
+<%- include('partials/footer')-%>
+

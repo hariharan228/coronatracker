@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <title>Covid 19 Sample by Master</title>
+  </head>
+  <body>
+    <canvas id="chart"></canvas>
+  </body>
+  <script>
+    var chart = document.getElementById("chart");
+    fetch("https://api.covid19india.org/districts_daily.json")
+      .then((res) => res.json())
+      .then((res) => {
+        const date = res["districtsDaily"]["Tamil Nadu"]["Madurai"].map(
+          (d) => d.date
+        );
+        const active = res["districtsDaily"]["Tamil Nadu"]["Madurai"].map(
+          (d) => d.active
+        );
+
+        var d = new Chart(chart, {
+          type: "line",
+          data: {
+            labels: date,
+            datasets: [
+              {
+                data: active,
+                label: "No of active cases",
+                //backgroundColor: ["red", "green"]
+              },
+            ],
+          },
+          options: {
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    beginAtZero: true,
+                  },
+                },
+              ],
+            },
+          },
+        });
+      });
+  </script>
+</html>
